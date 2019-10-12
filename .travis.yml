@@ -1,0 +1,74 @@
+language: python
+sudo: required
+cache: pip
+# Favor explicit over implicit and use an explicit build matrix.
+matrix:
+  allow_failures:
+    - env: TOXENV=py35-django111-drfmaster
+    - env: TOXENV=py36-django111-drfmaster
+    - env: TOXENV=py35-django21-drfmaster
+    - env: TOXENV=py36-django21-drfmaster
+    - env: TOXENV=py37-django21-drfmaster
+    - env: TOXENV=py35-django22-drfmaster
+    - env: TOXENV=py36-django22-drfmaster
+    - env: TOXENV=py37-django22-drfmaster
+
+  include:
+    - python: 3.6
+      env: TOXENV=lint
+    - python: 3.6
+      env: TOXENV=docs
+
+    - python: 3.5
+      env: TOXENV=py35-django111-drf310
+    - python: 3.5
+      env: TOXENV=py35-django111-drfmaster
+    - python: 3.5
+      env: TOXENV=py35-django21-drf310
+    - python: 3.5
+      env: TOXENV=py35-django21-drfmaster
+    - python: 3.5
+      dist: xenial
+      env: TOXENV=py35-django22-drf310
+    - python: 3.5
+      dist: xenial
+      env: TOXENV=py35-django22-drfmaster
+
+    - python: 3.6
+      env: TOXENV=py36-django111-drf310
+    - python: 3.6
+      env: TOXENV=py36-django111-drfmaster
+    - python: 3.6
+      env: TOXENV=py36-django21-drf310
+    - python: 3.6
+      env: TOXENV=py36-django21-drfmaster
+    - python: 3.6
+      dist: xenial
+      env: TOXENV=py36-django22-drf310
+    - python: 3.6
+      dist: xenial
+      env: TOXENV=py36-django22-drfmaster
+
+    - python: 3.7
+      dist: xenial
+      sudo: required
+      env: TOXENV=py37-django21-drf310
+    - python: 3.7
+      dist: xenial
+      sudo: required
+      env: TOXENV=py37-django21-drfmaster
+    - python: 3.7
+      dist: xenial
+      sudo: required
+      env: TOXENV=py37-django22-drf310
+    - python: 3.7
+      dist: xenial
+      sudo: required
+      env: TOXENV=py37-django22-drfmaster
+install:
+  - pip install tox
+script:
+  - tox
+after_success:
+  - pip install codecov
+  - codecov -e TOXENV --required
