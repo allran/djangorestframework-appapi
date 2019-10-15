@@ -1,6 +1,5 @@
 from rest_framework.views import exception_handler as drf_exception_handler
 from .response import APIResponse
-import logging
 from rest_framework import status
 from .settings import app_api_settings
 

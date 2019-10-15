@@ -20,8 +20,8 @@ from rest_framework import viewsets
 from rest_framework_app_api import mixins
 
 
-class ReadOnlyModelViewSet(mixins.QURetrieveModelMixin,
-                           mixins.QUListModelMixin,
+class ReadOnlyModelViewSet(mixins.RetrieveModelMixin,
+                           mixins.ListModelMixin,
                            viewsets.GenericViewSet):
     """
     A viewset that provides default `list()` and `retrieve()` actions.
@@ -29,11 +29,11 @@ class ReadOnlyModelViewSet(mixins.QURetrieveModelMixin,
     pass
 
 
-class ModelViewSet(mixins.QUCreateModelMixin,
-                   mixins.QURetrieveModelMixin,
-                   mixins.QUUpdateModelMixin,
-                   mixins.QUDestroyModelMixin,
-                   mixins.QUListModelMixin,
+class ModelViewSet(mixins.CreateModelMixin,
+                   mixins.RetrieveModelMixin,
+                   mixins.UpdateModelMixin,
+                   mixins.DestroyModelMixin,
+                   mixins.ListModelMixin,
                    viewsets.GenericViewSet):
     """
     A viewset that provides default `create()`, `retrieve()`, `update()`,

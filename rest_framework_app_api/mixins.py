@@ -5,11 +5,11 @@ We don't bind behaviour to http method handlers yet,
 which allows mixin classes to be composed in interesting ways.
 """
 from .response import APIResponse
-from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
+from rest_framework import mixins as drf_mixins
 from .settings import app_api_settings
 
 
-class QUCreateModelMixin(CreateModelMixin):
+class CreateModelMixin(drf_mixins.CreateModelMixin):
     """
     Create a model instance.
     """
@@ -24,7 +24,7 @@ class QUCreateModelMixin(CreateModelMixin):
                            headers=headers)
 
 
-class QUListModelMixin(ListModelMixin):
+class ListModelMixin(drf_mixins.ListModelMixin):
     """
     List a queryset.
     """
@@ -42,7 +42,7 @@ class QUListModelMixin(ListModelMixin):
                            msg=app_api_settings.DEFAULT_APP_MSG_SEARCH_SUCCESS)
 
 
-class QURetrieveModelMixin(RetrieveModelMixin):
+class RetrieveModelMixin(drf_mixins.RetrieveModelMixin):
     """
     Retrieve a model instance.
     """
@@ -54,7 +54,7 @@ class QURetrieveModelMixin(RetrieveModelMixin):
                            msg=app_api_settings.DEFAULT_APP_MSG_SEARCH_SUCCESS)
 
 
-class QUUpdateModelMixin(UpdateModelMixin):
+class UpdateModelMixin(drf_mixins.UpdateModelMixin):
     """
     Update a model instance.
     """
@@ -74,7 +74,7 @@ class QUUpdateModelMixin(UpdateModelMixin):
                            msg=app_api_settings.DEFAULT_APP_MSG_UPDATE_SUCCESS)
 
 
-class QUDestroyModelMixin(DestroyModelMixin):
+class DestroyModelMixin(drf_mixins.DestroyModelMixin):
     """
     Destroy a model instance.
     """

@@ -1,9 +1,14 @@
 from rest_framework.settings import api_settings
+from .settings import app_api_settings
 
 
 def api_dic_response(data=None, code=None, msg=None, kwargs=None):
     if data is None:
         data = {}
+
+    if code is None:
+        code = app_api_settings.DEFAULT_APP_CODE_SUCCESS
+
     data_obj = {
         'data': data,
         'code': code,
@@ -26,6 +31,21 @@ def api_dic_list(list_data=None, total_count=0, total_pages=0, kwargs=None):
         'total_count': total_count,
         'total_pages': total_pages
     }
+    if kwargs and isinstance(kwargs, dict) and kwargs.keys():
+        data_dict.update(kwargs)
+    return data_dict
+
+
+def api_dic_limit_list(list_data=None, limit=0, offset=0, kwargs=None):
+    if list_data is None:
+        list_data = []
+
+    data_dict = {
+        'list': list_data,
+        'limit': limit,
+        'offset': offset
+    }
+
     if kwargs and isinstance(kwargs, dict) and kwargs.keys():
         data_dict.update(kwargs)
     return data_dict

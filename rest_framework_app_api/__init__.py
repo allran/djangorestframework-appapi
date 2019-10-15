@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
+name = "djangorestframework-appapi"
 __title__ = 'djangorestframework-appapi'
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 __author__ = ''
 __license__ = 'BSD'
 __copyright__ = ''

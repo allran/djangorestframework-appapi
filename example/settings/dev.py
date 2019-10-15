@@ -1,7 +1,12 @@
 import os
+import sys
 
 SITE_ID = 1
 DEBUG = True
+
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(PROJECT_DIR)
+sys.path.insert(0,os.path.join(BASE_DIR, 'apps'))
 
 MEDIA_ROOT = os.path.normcase(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_URL = '/media/'

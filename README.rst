@@ -1,6 +1,4 @@
-==================================
 IOS&Andorid API and Django Rest Framework
-==================================
 
 --------
 Overview
@@ -128,6 +126,109 @@ Usage
 ``rest_framework_app_api`` assumes you are using class-based views in Django
 Rest Framework.
 
+if you use like ListAPIView in ``from rest_framework.generics import ListAPIView``, please replace with ``from rest_framework_app_api.generics import ListAPIView``.
+
+::
+
+    from snippets.models import Snippet
+    from snippets.serializers import SnippetSerializer
+    from rest_framework_app_api import generics
+
+    class SnippetList(generics.ListCreateAPIView):
+        queryset = Snippet.objects.all()
+        serializer_class = SnippetSerializer
+
+    class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
+        queryset = Snippet.objects.all()
+        serializer_class = SnippetSerializer
+
+
+if you use like ListModelMixin in ``from rest_framework.mixins import ListModelMixin``, please replace with ``from rest_framework_app_api.mixins import ListModelMixin``.
+
+::
+
+    from snippets.models import Snippet
+    from snippets.serializers import SnippetSerializer
+    from rest_framework_app_api import mixins
+    from rest_framework import generics
+
+    class SnippetDetail(mixins.RetrieveModelMixin,
+                        mixins.UpdateModelMixin,
+                        mixins.DestroyModelMixin,
+                        generics.GenericAPIView):
+        queryset = Snippet.objects.all()
+        serializer_class = SnippetSerializer
+
+        def get(self, request, *args, **kwargs):
+            return self.retrieve(request, *args, **kwargs)
+
+        def put(self, request, *args, **kwargs):
+            return self.update(request, *args, **kwargs)
+
+        def delete(self, request, *args, **kwargs):
+            return self.destroy(request, *args, **kwargs)
+
+if you use like APIView in ``from rest_framework.views import APIView``, please replace with ``from rest_framework_app_api.views import APIView``.
+
+::
+
+    from snippets.models import Snippet
+    from snippets.serializers import SnippetSerializer
+    from rest_framework_app_api.views import APIView
+    from rest_framework_app_api.response import APIResponse
+    from rest_framework import status
+
+    class SnippetList(APIView):
+        """
+        List all snippets, or create a new snippet.
+        """
+        def get(self, request, format=None):
+            snippets = Snippet.objects.all()
+            serializer = SnippetSerializer(snippets, many=True)
+            return APIResponse(serializer.data)
+
+        def post(self, request, format=None):
+            serializer = SnippetSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return APIResponse(serializer.data)
+            return APIResponse(serializer.errors)
+
+    class SnippetDetail(APIView):
+        """
+        Retrieve, update or delete a snippet instance.
+        """
+        def get(self, request, pk, format=None):
+            snippet = self.get_object(pk)
+            serializer = SnippetSerializer(snippet)
+            return APIResponse(serializer.data)
+
+        def put(self, request, pk, format=None):
+            snippet = self.get_object(pk)
+            serializer = SnippetSerializer(snippet, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return APIResponse(serializer.data)
+            return APIResponse(serializer.errors, code=status.HTTP_400_BAD_REQUEST)
+
+        def delete(self, request, pk, format=None):
+            snippet = self.get_object(pk)
+            snippet.delete()
+            return APIResponse(code=status.HTTP_204_NO_CONTENT)
+
+if you use like ModelViewSet in ``from rest_framework.viewsets import ModelViewSet``, please replace with ``from rest_framework_app_api.viewsets import ModelViewSet``.
+
+::
+
+    from snippets.models import Snippet
+    from rest_framework_app_api import viewsets
+
+    class SnippetViewSet(viewsets.ModelViewSet):
+        queryset = Author.objects.all()
+        serializer_class = AuthorSerializer
+
+if you use like Response in ``from rest_framework.response import Response``, please replace with ``from rest_framework_app_api.response import APIResponse``.
+
 
 Settings
 ^^^^^^^^
@@ -140,6 +241,18 @@ Settings
         # rest_framework_json_api
         'EXCEPTION_HANDLER': 'rest_framework_app_api.exceptions.exception_handler',
         'DEFAULT_PAGINATION_CLASS': 'rest_framework_app_api.pagination.JsonApiPageNumberPagination',
+
+        # rest_framework_json_api code
+        'DEFAULT_APP_CODE_SUCCESS': 200,  # default success code
+        'DEFAULT_APP_CODE_FAIL': 0,  # default error code
+
+        # rest_framework_json_api msg
+        'DEFAULT_APP_MSG_CREAT_SUCCESS': 'create success！',
+        'DEFAULT_APP_MSG_UPDATE_SUCCESS': 'update success！',
+        'DEFAULT_APP_MSG_DELETE_SUCCESS': 'delete success！',
+        'DEFAULT_APP_MSG_SEARCH_SUCCESS': 'get data success！',
+        'DEFAULT_APP_MSG_SEARCH_NODATA': 'no data！',
+        'DEFAULT_APP_MSG_UNNONE': 'unknown error！',
     }
 
 
