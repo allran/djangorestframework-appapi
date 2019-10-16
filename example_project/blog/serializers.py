@@ -3,7 +3,7 @@ from datetime import datetime
 from rest_framework.validators import UniqueTogetherValidator
 from rest_framework import serializers
 
-from example.models import (
+from blog.models import (
     Author,
     Blog,
     UserFavorite

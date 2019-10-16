@@ -14,6 +14,7 @@ def api_dic_response(data=None, code=None, msg=None, kwargs=None):
         'code': code,
         'msg': msg
     }
+
     if kwargs and isinstance(kwargs, dict) and kwargs.keys():
         data_obj.update(kwargs)
     return data_obj

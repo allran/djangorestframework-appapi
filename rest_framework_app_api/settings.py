@@ -27,7 +27,7 @@ DEFAULTS = {
 
     # rest_framework
     # 'EXCEPTION_HANDLER': 'rest_framework_app_api.exceptions.exception_handler',
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework_app_api.pagination.JsonApiPageNumberPagination',
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework_app_api.pagination.AppApiPageNumberPagination',
 }
 
 IMPORT_STRINGS = [

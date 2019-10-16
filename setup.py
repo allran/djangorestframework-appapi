@@ -50,12 +50,9 @@ def get_package_data(package):
 
 
 if sys.argv[-1] == 'publish':
-    # os.system("python setup.py sdist upload")
-    # os.system("python setup.py bdist_wheel upload")
     os.system("python3 setup.py sdist bdist_wheel")
     os.system("twine check dist/*")
     os.system("twine upload dist/*")
-    # os.system("python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/* --verbose")
     print("You probably want to also tag the version now:")
     print("  git tag -a {0} -m 'version {0}'".format(
         get_version('rest_framework_app_api')))

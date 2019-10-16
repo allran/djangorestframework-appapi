@@ -23,18 +23,54 @@ class APIResponse(Response):
             self.data.update(kwargs)
 
 
-def response_app_success(data=None, msg=None):
+class APIResponseSuccess(APIResponse):
     """
-    :return simple success response
+    simple success response
     """
-    return APIResponse(data=data, code=app_api_settings.DEFAULT_APP_CODE_SUCCESS, msg=msg, status=status.HTTP_200_OK)
+    code = app_api_settings.DEFAULT_APP_CODE_SUCCESS
 
 
-def response_app_error(data=None, code=app_api_settings.DEFAULT_APP_CODE_FAIL, msg=app_api_settings.DEFAULT_APP_MSG_UNNONE):
+class APIResponseError(APIResponse):
     """
-    :return simple error response
+    simple error response
     """
-    return APIResponse(data=data, code=code, msg=msg, status=status.HTTP_200_OK)
+    code = app_api_settings.DEFAULT_APP_CODE_FAIL
+    msg = app_api_settings.DEFAULT_APP_MSG_UNNONE
+
+
+class APIResponseBadRequest(APIResponseError):
+    code = status.HTTP_400_BAD_REQUEST
+    msg = '错误请求'
+
+
+class APIResponseErrorParams(APIResponseError):
+    code = status.HTTP_400_BAD_REQUEST
+    msg = '参数错误'
+
+
+class APIResponseErrorUnauth(APIResponseError):
+    code = status.HTTP_401_UNAUTHORIZED
+    msg = '未登录 或者token过期'
+
+
+class APIResponseErrorForbidden(APIResponseError):
+    code = status.HTTP_403_FORBIDDEN
+    msg = '您没有该操作权限'
+
+
+class APIResponseErrorNotFound(APIResponseError):
+    code = status.HTTP_404_NOT_FOUND
+    msg = '未找到'
+
+
+class APIResponseErrorNotAllowed(APIResponseError):
+    code = status.HTTP_405_METHOD_NOT_ALLOWED
+    msg = '方法错误, 不允许'
+
+
+class APIResponseErrorServer(APIResponseError):
+    code = status.HTTP_500_INTERNAL_SERVER_ERROR
+    msg = '服务器错误'
 
 
 def response_app_list(list_data=None, total_count=0, total_pages=0, kwargs=None):
@@ -42,7 +78,7 @@ def response_app_list(list_data=None, total_count=0, total_pages=0, kwargs=None)
     :return page list response
     """
     json_dict = api_dic_list(list_data=list_data, total_count=total_count, total_pages=total_pages, kwargs=kwargs)
-    return response_app_success(data=json_dict, msg=app_api_settings.DEFAULT_APP_MSG_SEARCH_SUCCESS)
+    return APIResponseSuccess(data=json_dict, msg=app_api_settings.DEFAULT_APP_MSG_SEARCH_SUCCESS)
 
 
 def response_app_list_limit(list_data=None, limit=0, offset=0, kwargs=None):
@@ -50,24 +86,4 @@ def response_app_list_limit(list_data=None, limit=0, offset=0, kwargs=None):
     :return limit list response
     """
     json_dict = api_dic_limit_list(list_data=list_data, limit=limit, offset=offset, kwargs=kwargs)
-    return response_app_success(data=json_dict, msg=app_api_settings.DEFAULT_APP_MSG_SEARCH_SUCCESS)
-
-
-def response_app_error_params(message='参数错误', data=None):
-    return response_app_error(code=status.HTTP_400_BAD_REQUEST, msg=message, data=data)
-
-
-def response_app_error_unauth(message='未登录 或者token过期', data=None):
-    return response_app_error(code=status.HTTP_401_UNAUTHORIZED, msg=message, data=data)
-
-
-def response_app_error_forbidden(message='您没有该操作权限', data=None):
-    return response_app_error(code=status.HTTP_403_FORBIDDEN, msg=message, data=data)
-
-
-def response_app_error_method(message='方法错误', data=None):
-    return response_app_error(code=status.HTTP_405_METHOD_NOT_ALLOWED, msg=message, data=data)
-
-
-def response_app_error_server(message='服务器错误', data=None):
-    return response_app_error(code=status.HTTP_500_INTERNAL_SERVER_ERROR, msg=message, data=data)
+    return APIResponseSuccess(data=json_dict, msg=app_api_settings.DEFAULT_APP_MSG_SEARCH_SUCCESS)

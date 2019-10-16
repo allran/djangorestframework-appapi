@@ -3,7 +3,7 @@
 import factory
 from faker import Factory as FakerFactory
 
-from example.models import (
+from .models import (
     Author,
     Blog,
 )

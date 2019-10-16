@@ -2,8 +2,8 @@ from rest_framework_app_api import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authentication import SessionAuthentication
 
-from example.models import Author, Blog, UserFavorite
-from example.serializers import (
+from .models import Author, Blog, UserFavorite
+from blog.serializers import (
     AuthorSerializer,
     BlogSerializer,
     UserFavDetailSerializer,

@@ -10,7 +10,7 @@ Overview
 * Format specification: http://jsonapi.org/format/
 
 
-By default, Django REST Framework will produce a request like::
+1. By default, Django REST Framework will produce a request like::
 
     http://example.com/api/1.0/identities/?page=1
 
@@ -34,6 +34,23 @@ and then the response like::
             ],
             "total_count": 2,
             "total_pages": 1
+        }
+    }
+
+2. if you want get object info, you will produce a request like:
+    http://example.com/api/1.0/identities/1/
+
+and then the response like:
+
+::
+
+    {
+        "count": 200,
+        "msg": "success!",
+        "data": {
+            "id": 1,
+            "username": "john2",
+            "full_name": "John Coltrane2"
         }
     }
 
@@ -99,9 +116,9 @@ installed and activated:
     $ git clone https://github.com/allran/djangorestframework-appapi.git
     $ cd django-rest-framework-app-api
     $ pip install -U -e . -r requirements.txt
-    $ django-admin migrate --settings=example.settings
-    $ django-admin loaddata drf_example --settings=example.settings
-    $ django-admin runserver --settings=example.settings
+    $ django-admin migrate --settings=example_project.settings
+    $ django-admin loaddata drf_example --settings=example_project.settings
+    $ django-admin runserver --settings=example_project.settings
 
 Browse to http://localhost:8000
 
@@ -233,20 +250,28 @@ if you use like Response in ``from rest_framework.response import Response``, pl
 Settings
 ^^^^^^^^
 
+rest_framework setting
+
 ::
 
     REST_FRAMEWORK = {
         'PAGE_SIZE': 10,
 
-        # rest_framework_json_api
+        # rest_framework custom setting
         'EXCEPTION_HANDLER': 'rest_framework_app_api.exceptions.exception_handler',
-        'DEFAULT_PAGINATION_CLASS': 'rest_framework_app_api.pagination.JsonApiPageNumberPagination',
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework_app_api.pagination.AppApiPageNumberPagination',
+    }
 
-        # rest_framework_json_api code
+rest_framework_app_api setting
+
+::
+
+    REST_FRAMEWORK_APPAPI = {
+        # rest_framework_app_api code
         'DEFAULT_APP_CODE_SUCCESS': 200,  # default success code
         'DEFAULT_APP_CODE_FAIL': 0,  # default error code
 
-        # rest_framework_json_api msg
+        # rest_framework_app_api msg
         'DEFAULT_APP_MSG_CREAT_SUCCESS': 'create success！',
         'DEFAULT_APP_MSG_UPDATE_SUCCESS': 'update success！',
         'DEFAULT_APP_MSG_DELETE_SUCCESS': 'delete success！',
@@ -254,6 +279,4 @@ Settings
         'DEFAULT_APP_MSG_SEARCH_NODATA': 'no data！',
         'DEFAULT_APP_MSG_UNNONE': 'unknown error！',
     }
-
-
 
