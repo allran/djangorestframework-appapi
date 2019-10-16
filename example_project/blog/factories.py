@@ -19,6 +19,7 @@ class BlogFactory(factory.django.DjangoModelFactory):
     title = factory.LazyAttribute(lambda x: faker.name())
     content = factory.LazyAttribute(lambda x: faker.name())
 
+
 class AuthorFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Author

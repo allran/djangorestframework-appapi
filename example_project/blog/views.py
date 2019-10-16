@@ -1,4 +1,5 @@
-from rest_framework_app_api import viewsets
+# from rest_framework_app_api import viewsets
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authentication import SessionAuthentication
 

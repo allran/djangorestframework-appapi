@@ -139,8 +139,38 @@ installed and activated:
 Usage
 -----
 
+一. ``rest_framework_app_api`` assumes you are using class-based renderers in Django
+Rest Framework.
 
-``rest_framework_app_api`` assumes you are using class-based views in Django
+::
+
+    REST_FRAMEWORK = {
+        'DEFAULT_RENDERER_CLASSES': (
+            'rest_framework_app_api.renderers.JSONRenderer',
+        ),
+    }
+
+then you can get the app response data
+
+::
+
+    {
+        "data": [
+            {
+                "id": 1,
+                "name": "张三"
+            },
+            {
+                "id": 2,
+                "name": "李四"
+            }
+        ],
+        "code": 200,
+        "msg": "OK"
+    }
+
+
+二. ``rest_framework_app_api`` assumes you are using class-based views in Django
 Rest Framework.
 
 if you use like ListAPIView in ``from rest_framework.generics import ListAPIView``, please replace with ``from rest_framework_app_api.generics import ListAPIView``.
@@ -160,7 +190,7 @@ if you use like ListAPIView in ``from rest_framework.generics import ListAPIView
         serializer_class = SnippetSerializer
 
 
-if you use like ListModelMixin in ``from rest_framework.mixins import ListModelMixin``, please replace with ``from rest_framework_app_api.mixins import ListModelMixin``.
+1. if you use like ListModelMixin in ``from rest_framework.mixins import ListModelMixin``, please replace with ``from rest_framework_app_api.mixins import ListModelMixin``.
 
 ::
 
@@ -185,7 +215,7 @@ if you use like ListModelMixin in ``from rest_framework.mixins import ListModelM
         def delete(self, request, *args, **kwargs):
             return self.destroy(request, *args, **kwargs)
 
-if you use like APIView in ``from rest_framework.views import APIView``, please replace with ``from rest_framework_app_api.views import APIView``.
+2. if you use like APIView in ``from rest_framework.views import APIView``, please replace with ``from rest_framework_app_api.views import APIView``.
 
 ::
 
@@ -233,7 +263,7 @@ if you use like APIView in ``from rest_framework.views import APIView``, please 
             snippet.delete()
             return APIResponse(code=status.HTTP_204_NO_CONTENT)
 
-if you use like ModelViewSet in ``from rest_framework.viewsets import ModelViewSet``, please replace with ``from rest_framework_app_api.viewsets import ModelViewSet``.
+3. if you use like ModelViewSet in ``from rest_framework.viewsets import ModelViewSet``, please replace with ``from rest_framework_app_api.viewsets import ModelViewSet``.
 
 ::
 
@@ -244,7 +274,7 @@ if you use like ModelViewSet in ``from rest_framework.viewsets import ModelViewS
         queryset = Author.objects.all()
         serializer_class = AuthorSerializer
 
-if you use like Response in ``from rest_framework.response import Response``, please replace with ``from rest_framework_app_api.response import APIResponse``.
+4. if you use like Response in ``from rest_framework.response import Response``, please replace with ``from rest_framework_app_api.response import APIResponse``.
 
 
 Settings

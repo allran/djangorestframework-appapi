@@ -38,12 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'utils',
     'rest_framework',
-    # 'debug_toolbar',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -128,7 +129,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'EXCEPTION_HANDLER': 'rest_framework_app_api.exceptions.exception_handler',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework_app_api.pagination.AppApiPageNumberPagination',
-    'DEFAULT_PARSER_CLASSES': (
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework_app_api.renderers.JSONRenderer',
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser'
